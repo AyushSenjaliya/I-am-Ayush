@@ -40,7 +40,7 @@ I'm a passionate **Full Stack Developer** with expertise in building scalable, h
 - Automates inventory and expense calculations
 
 ## 📩 Connect with Me
-- **Email:** ayushsenjaliya@example.com
+- **Email:** aayushsenjaliya@gmail.com
 - **GitHub:** [github.com/ayushsenjaliya](https://github.com/ayushsenjaliya)
 - **LinkedIn:** [linkedin.com/in/ayushsenjaliya](https://linkedin.com/in/ayushsenjaliya)
 
