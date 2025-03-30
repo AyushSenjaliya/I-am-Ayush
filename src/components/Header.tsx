@@ -62,9 +62,7 @@ const Header = () => {
           ))}
           <Button
             className="ml-4 bg-transparent hover:bg-highlight/10 text-highlight border border-highlight rounded transition-all"
-            onClick={() =>
-              window.open("../../public/AyushResume.pdf", "_blank")
-            }
+            onClick={() => window.open("../../AyushResume.pdf", "_blank")}
           >
             Resume
           </Button>
