@@ -131,7 +131,7 @@ const ContactSection = () => {
                 <div>
                   <h4 className="text-white font-semibold">LinkedIn</h4>
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/in/ayushsenjaliya/"
                     className="text-slate-light hover:text-highlight transition-colors"
                   >
                     linkedin.com/in/ayushsenjaliya
@@ -146,7 +146,7 @@ const ContactSection = () => {
                 <div>
                   <h4 className="text-white font-semibold">GitHub</h4>
                   <a
-                    href="#"
+                    href="https://github.com/AyushSenjaliya/"
                     className="text-slate-light hover:text-highlight transition-colors"
                   >
                     github.com/AyushSenjaliya
