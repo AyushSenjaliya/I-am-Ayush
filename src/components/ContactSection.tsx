@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Linkedin, Github, Send } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { sendFormData } from "../api/api";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -13,6 +14,8 @@ const ContactSection = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false); // Loading state for UX
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -20,18 +23,33 @@ const ContactSection = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form data submitted:", formData);
+    setLoading(true);
 
-    // In a real app, you would send this data to your backend/email service
-    toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. I'll get back to you soon.",
-    });
+    try {
+      const response = await sendFormData(formData);
 
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
+      if (response.ok) {
+        toast({
+          title: "Message sent!",
+          description: "Thanks for reaching out. I'll get back to you soon.",
+        });
+
+        // Reset form
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,44 +75,40 @@ const ContactSection = () => {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="bg-navy-light border-slate-dark focus:border-highlight text-white"
-                />
-              </div>
-              <div>
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="bg-navy-light border-slate-dark focus:border-highlight text-white"
-                />
-              </div>
-              <div>
-                <Textarea
-                  name="message"
-                  placeholder="Your Message"
-                  required
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="bg-navy-light border-slate-dark focus:border-highlight text-white resize-none"
-                />
-              </div>
+              <Input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="bg-navy-light border-slate-dark focus:border-highlight text-white"
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="bg-navy-light border-slate-dark focus:border-highlight text-white"
+              />
+              <Textarea
+                name="message"
+                placeholder="Your Message"
+                required
+                rows={5}
+                value={formData.message}
+                onChange={handleChange}
+                className="bg-navy-light border-slate-dark focus:border-highlight text-white resize-none"
+              />
               <Button
                 type="submit"
+                disabled={loading}
                 className="bg-highlight text-navy-dark hover:bg-highlight/90 flex items-center gap-2"
               >
-                Send Message <Send size={16} />
+                {loading ? "Sending..." : "Send Message"}
+                <Send size={16} />
               </Button>
             </form>
           </div>
@@ -154,7 +168,6 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
-
             <div className="bg-navy-light p-6 rounded-lg border border-slate-dark">
               <h4 className="text-white font-semibold mb-2">Availability</h4>
               <p className="text-slate-light mb-4">
