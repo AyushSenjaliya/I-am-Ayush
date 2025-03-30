@@ -22,10 +22,24 @@ const HeroSection = () => {
             </p>
 
             <div className="flex space-x-4 pt-4">
-              <Button className="bg-highlight text-navy-dark hover:bg-highlight/90 px-6 py-6">
+              <Button
+                className="bg-highlight text-navy-dark hover:bg-highlight/90 px-6 py-6"
+                onClick={() =>
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
                 Hire Me
               </Button>
-              <Button className="border border-highlight text-highlight bg-transparent hover:bg-highlight/10 px-6 py-6">
+              <Button
+                className="border border-highlight text-highlight bg-transparent hover:bg-highlight/10 px-6 py-6"
+                onClick={() =>
+                  document
+                    .getElementById("projects")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
                 See My Work
               </Button>
             </div>

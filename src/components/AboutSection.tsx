@@ -24,7 +24,10 @@ const AboutSection = () => {
           <div className="w-16 h-1 bg-highlight rounded"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div
+          id="skills"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+        >
           <div className="space-y-6">
             <p className="text-slate text-lg">
               I'm a passionate Full Stack Developer with a strong focus on
