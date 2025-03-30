@@ -1,69 +1,46 @@
-# Welcome to your Lovable project
+# Ayush Senjaliya - Portfolio
 
-## Project info
+## 🚀 About Me
+I'm a passionate **Full Stack Developer** with expertise in building scalable, high-performance applications. With **1.5+ years** of experience, I specialize in crafting clean, maintainable code and intuitive user experiences. I'm always eager to explore new technologies and thrive on solving real-time data challenges.
 
-**URL**: https://lovable.dev/projects/1ef86be5-ff0c-40dd-8061-64acbb6f08e5
+## 🔥 Skills & Technologies
 
-## How can I edit this code?
+**Frontend:** React, Next.js, Tailwind CSS, MUI, ShadCN, React Query, Vite
 
-There are several ways of editing your application.
+**Backend:** Node.js, NestJS, Express, RESTful APIs, WebSockets
 
-**Use Lovable**
+**Database & Storage:** MongoDB, MySQL, Redis, Prisma
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1ef86be5-ff0c-40dd-8061-64acbb6f08e5) and start prompting.
+**DevOps & Tools:** Docker, Git, CI/CD, Webhooks
 
-Changes made via Lovable will be committed automatically to this repo.
+## 💼 Professional Experience
+- **React Developer Intern** (6 months) - Worked on an **Accounting Management System** to streamline financial workflows.
+- **Full Stack Developer** - Built and enhanced multiple projects, focusing on automation, scalability, and real-time data processing.
 
-**Use your preferred IDE**
+## 🛠️ Featured Projects
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📌 Clinic Management System
+**An advanced appointment scheduling system with WhatsApp booking integration.**
+- Automated appointment booking using **Meta Webhooks**
+- Built with **React (TS), ShadCN, NestJS, Prisma, Redis**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 📌 Garment Costing Calculator
+**A tool for calculating production costs, managing material stock, and optimizing pricing.**
+- Enables precise cost estimation for garment production
+- Helps manage inventory and generate professional cost sheets
 
-Follow these steps:
+### 📌 Real-Time Stock Market Analytics
+**A platform for market data visualization, real-time alerts, and strategy-based trade recommendations.**
+- Displays **F&O market, OHCL, IV, and custom analytics**
+- Helps traders identify the best trades based on personalized strategies
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 📌 Import Management System
+**A solution to track and manage imports, sales, and stock movement across locations.**
+- Handles **China-India import tracking & ledger management**
+- Automates inventory and expense calculations
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📩 Connect with Me
+- **Email:** ayushsenjaliya@example.com
+- **GitHub:** [github.com/ayushsenjaliya](https://github.com/ayushsenjaliya)
+- **LinkedIn:** [linkedin.com/in/ayushsenjaliya](https://linkedin.com/in/ayushsenjaliya)
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/1ef86be5-ff0c-40dd-8061-64acbb6f08e5) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
