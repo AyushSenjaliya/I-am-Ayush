@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Copy, Check, FileText, Sparkles, Terminal, MapPin, Phone, Mail } from "lucide-react";
-import ThreeDParticleSphere from "./ThreeDParticleSphere";
-import TextScramble from "./TextScramble";
 
 const HeroSection = () => {
   const [copied, setCopied] = useState(false);
@@ -62,7 +60,7 @@ const HeroSection = () => {
             <h3 className="text-highlight font-mono text-lg">Hi, my name is</h3>
             
             <h1 className="text-4xl sm:text-6xl font-bold text-white tracking-tight">
-              <TextScramble text="Ayush Senjaliya" scrambleSpeed={45} />
+              Ayush Senjaliya
             </h1>
             
             <h2 className="text-2xl sm:text-4xl font-bold text-slate">
@@ -119,14 +117,9 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right Column: 3D Particle Sphere + Code Terminal */}
-          <div className="lg:col-span-5 animate-fade-in-right space-y-4">
+          {/* Right Column: Code Terminal */}
+          <div className="lg:col-span-5 animate-fade-in-right">
             
-            {/* Interactive 3D Sphere Canvas */}
-            <div className="flex justify-center -mb-8">
-              <ThreeDParticleSphere />
-            </div>
-
             {/* Terminal Card */}
             <div className="relative rounded-xl bg-navy-dark border border-slate-dark/60 shadow-2xl overflow-hidden shimmer-card">
               
