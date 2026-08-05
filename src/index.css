@@ -2,99 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 166 100% 70%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 166 100% 70%;
-
-    --radius: 0.5rem;
-  }
+:root {
+  --bg: #0F1B1E;        /* page background — deep ink teal-black */
+  --surface: #16262A;   /* card/panel background */
+  --surface-2: #1C2E32; /* nested panel background, e.g. inside cards */
+  --line: rgba(242,239,233,0.09); /* hairline borders */
+  --text: #F2EFE9;      /* primary text */
+  --muted: #8FA3A1;     /* secondary/muted text */
+  --gold: #E8B04B;      /* primary accent — CTAs, highlights, positive numbers */
+  --coral: #E85C4A;     /* warning accent — used ONLY for "revenue leak" callouts */
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  /* Hide default cursor on pointer-enabled desktop devices */
-  @media (pointer: fine) {
-    body, a, button, input, textarea, select {
-      cursor: none !important;
-    }
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg);
   }
 
   body {
-    @apply bg-navy text-slate antialiased selection:bg-highlight/30 selection:text-highlight;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  html {
-    scroll-behavior: smooth;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
   }
 }
 
-/* Glassmorphism 2.0 & 3D Utilities */
-@layer utilities {
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  
-  .transform-style-3d {
-    transform-style: preserve-3d;
-  }
-  
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
+/* Typography Utility Classes */
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
 
-  .glass-panel {
-    background: rgba(17, 34, 64, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(100, 255, 218, 0.12);
-  }
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
 
-  .glass-card-hover {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .glass-card-hover:hover {
-    border-color: rgba(100, 255, 218, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(100, 255, 218, 0.15);
-  }
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
 
-  .text-glow {
-    text-shadow: 0 0 14px rgba(100, 255, 218, 0.5);
-  }
+.section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
 
-  .bg-gradient-radial {
-    background-image: radial-gradient(var(--tw-gradient-stops));
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 36px);
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(36px, 6vw, 58px);
+  line-height: 1.05;
+  color: var(--text);
+}
+
+/* Cards & Surfaces */
+.theme-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.theme-card-nested {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+/* Falling Drip Animation for Revenue Leak Card */
+@keyframes dripDrop {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(70px);
+    opacity: 0;
+  }
+}
+
+.drip-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.drip-dot {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 8px;
+  background-color: var(--coral);
+  border-radius: 9999px;
+  animation: dripDrop 2.4s infinite ease-in;
+}
+
+.drip-dot-1 { left: 12%; animation-delay: 0s; }
+.drip-dot-2 { left: 38%; animation-delay: 0.8s; }
+.drip-dot-3 { left: 74%; animation-delay: 1.5s; }
+.drip-dot-4 { left: 88%; animation-delay: 0.3s; }
+
+/* Bar Fill Smooth Transition */
+.bar-fill {
+  transition: width 0.4s ease;
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .drip-dot {
+    animation: none !important;
+  }
+  .bar-fill {
+    transition: none !important;
   }
 }
 
@@ -104,85 +148,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a192f;
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #172a45;
+  background: var(--surface-2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64ffda;
-}
-
-/* Keyframes & Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marqueeReverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0%); }
-}
-
-@keyframes shimmerSweep {
-  0% { transform: translateX(-100%) rotate(25deg); }
-  100% { transform: translateX(200%) rotate(25deg); }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-}
-
-.animate-marquee-reverse {
-  animation: marqueeReverse 30s linear infinite;
-}
-
-.shimmer-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.shimmer-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(100, 255, 218, 0.08),
-    transparent
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.shimmer-card:hover::after {
-  opacity: 1;
-  animation: shimmerSweep 1.2s ease-in-out;
+  background: var(--gold);
 }

@@ -1,95 +1,52 @@
-import CustomCursor from "@/components/CustomCursor";
-import BackgroundCanvas from "@/components/BackgroundCanvas";
 import Header from "@/components/Header";
-import LiveSystemBar from "@/components/LiveSystemBar";
 import HeroSection from "@/components/HeroSection";
-import MarqueeRibbon from "@/components/MarqueeRibbon";
-import StatsSection from "@/components/StatsSection";
 import AboutSection from "@/components/AboutSection";
-import EducationSection from "@/components/EducationSection";
-import TechStackSection from "@/components/TechStackSection";
+import SkillsSection from "@/components/TechStackSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import TechRadarSection from "@/components/TechRadarSection";
-import ArchitectureSection from "@/components/ArchitectureSection";
+import CalculatorSection from "@/components/CalculatorSection";
+import ProductLabSection from "@/components/ProductLabSection";
 import ExperienceSection from "@/components/ExperienceSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import FAQSection from "@/components/FAQSection";
+import BlogSection from "@/components/BlogSection";
+import EducationSection from "@/components/EducationSection";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import AIChatModal from "@/components/AIChatModal";
-import ScrollReveal from "@/components/ScrollReveal";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-navy text-slate relative overflow-hidden">
-      {/* Custom Physics Magnetic Cursor Follower */}
-      <CustomCursor />
-
-      {/* Dynamic ambient mouse particle canvas background */}
-      <BackgroundCanvas />
-
-      {/* Main Page Layout */}
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] relative antialiased">
+      {/* 1. Sticky Nav */}
       <Header />
-      <div className="pt-20">
-        <LiveSystemBar />
-      </div>
 
-      <main className="relative z-10">
+      <main>
+        {/* 2. Hero */}
         <HeroSection />
-        
-        <ScrollReveal direction="zoom" delay={100}>
-          <MarqueeRibbon />
-        </ScrollReveal>
 
-        <ScrollReveal direction="up">
-          <StatsSection />
-        </ScrollReveal>
+        {/* 3. About */}
+        <AboutSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <AboutSection />
-        </ScrollReveal>
+        {/* 4. Skills */}
+        <SkillsSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <EducationSection />
-        </ScrollReveal>
+        {/* 5. Featured Projects */}
+        <ProjectsSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <TechStackSection />
-        </ScrollReveal>
+        {/* 6. "See It In Action" — Live Interactive Calculator */}
+        <CalculatorSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <ProjectsSection />
-        </ScrollReveal>
+        {/* 7. Product Lab / Case Studies */}
+        <ProductLabSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <TechRadarSection />
-        </ScrollReveal>
+        {/* 8. Experience Timeline */}
+        <ExperienceSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <ArchitectureSection />
-        </ScrollReveal>
+        {/* 9. Blog */}
+        <BlogSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <ExperienceSection />
-        </ScrollReveal>
+        {/* 10. Education */}
+        <EducationSection />
 
-        <ScrollReveal direction="up" delay={100}>
-          <TestimonialsSection />
-        </ScrollReveal>
-
-        <ScrollReveal direction="up" delay={100}>
-          <FAQSection />
-        </ScrollReveal>
-
-        <ScrollReveal direction="up" delay={100}>
-          <ContactSection />
-        </ScrollReveal>
+        {/* 11. Contact / Footer */}
+        <ContactSection />
       </main>
-
-      <Footer />
-
-      {/* Interactive AI Chatbot Widget */}
-      <AIChatModal />
     </div>
   );
 };

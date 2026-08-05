@@ -1,127 +1,79 @@
-import { Briefcase, Calendar, CheckCircle2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-
-interface ExperienceItem {
-  period: string;
-  role: string;
-  company: string;
-  type: string;
-  location: string;
-  description: string[];
-  skills: string[];
-}
-
-const experiences: ExperienceItem[] = [
+const experiences = [
   {
     period: "May 2025 — Present",
-    role: "Full Stack & Shopify Developer",
-    company: "Independent / Freelance Projects",
-    type: "Freelance",
-    location: "Surat, Gujarat, India (Remote)",
-    description: [
-      "Designed and developed custom Shopify stores, optimizing liquid themes, payment gateway flows, and responsive user experiences.",
-      "Built a personalized eCommerce business management web application featuring real-time order tracking, inventory controls, and automated customer notifications.",
-      "Integrated Shopify Admin REST/GraphQL APIs with Node.js backend systems for real-time product & order synchronization.",
-      "Helped small-to-mid businesses digitize manual workflows, eliminate operational overhead, and scale their online sales footprint."
-    ],
-    skills: ["React", "Next.js", "Node.js", "Shopify API", "Liquid", "Express", "MongoDB", "Webhooks", "Tailwind CSS"]
+    role: "Full Stack & AI Systems Engineering Consultant",
+    company: "Independent Client & Enterprise Projects",
+    achievements: [
+      "Architected autonomous multi-agent AI platforms (Nexus & Nexara), reducing manual lead generation & trend research overhead by 40%.",
+      "Engineered real-time Server-Sent Events (SSE) telemetry and WebSockets pipelines, maintaining sub-50ms data streaming latency.",
+      "Integrated 3-tier AI fallback cascades (Gemini API ➔ Sarvam AI ➔ Rule Engines) ensuring 99.9% uptime for automated scraping & pitch generation.",
+      "Delivered custom e-commerce management software with automated order workflows, real-time inventory controls, and payment gateway integrations."
+    ]
   },
   {
     period: "Jun 2024 — April 2025",
-    role: "FullStack Developer",
+    role: "Full Stack Software Engineer",
     company: "Dot3 Solutions",
-    type: "Full-Time",
-    location: "Surat, Gujarat, India",
-    description: [
-      "Built and optimized scalable web applications, architecting full-stack features across React, Next.js, Node.js, and NestJS.",
-      "Engineered real-time data streaming pipelines and WebSockets for low-latency client communication.",
-      "Structured database schemas in MongoDB, MySQL, and managed type-safe migrations with Prisma ORM."
-    ],
-    skills: ["React", "Next.js", "Node.js", "NestJS", "WebSockets", "MongoDB", "MySQL", "Prisma ORM", "TypeScript"]
+    achievements: [
+      "Architected full-stack features across React, Next.js, Node.js, and NestJS for enterprise business applications.",
+      "Engineered low-latency WebSocket data streaming channels, accelerating real-time client UI updates by 35%.",
+      "Designed normalized PostgreSQL & MongoDB schemas with type-safe Prisma ORM migrations, improving database query response times."
+    ]
   },
   {
     period: "Dec 2023 — Jun 2024",
-    role: "React.js Intern",
+    role: "Frontend Engineer Intern",
     company: "Dot3 Solutions",
-    type: "Internship",
-    location: "Surat, Gujarat, India",
-    description: [
-      "Developed the Accounting Management System, building accessible React UI components, complex form states, and backend REST integrations.",
-      "Integrated React Hook Form, TanStack Query, Zustand, and ShadCN UI to deliver clean financial dashboards."
-    ],
-    skills: ["React", "JavaScript", "React Hook Form", "TanStack Query", "Zustand", "ShadCN UI", "REST APIs"]
+    achievements: [
+      "Built the core UI for the Accounting Management System, implementing accessible React components and complex multi-step financial forms.",
+      "Integrated TanStack Query, Zustand, and React Hook Form to eliminate unnecessary component re-renders and boost dashboard responsiveness."
+    ]
   }
 ];
 
 const ExperienceSection = () => {
   return (
-    <section id="experience" className="py-20 bg-navy-dark relative border-t border-slate-dark/40">
-      <div className="container max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="experience" className="py-24 bg-[var(--bg)] border-b border-[var(--line)]">
+      <div className="max-w-[1080px] mx-auto px-6">
         
         {/* Header */}
-        <div className="flex flex-col items-center mb-16">
-          <h2 className="text-3xl font-bold text-white flex items-center gap-2 mb-2">
-            <span className="text-highlight font-mono">04.</span> Professional Work Experience
-          </h2>
-          <div className="w-16 h-1 bg-highlight rounded"></div>
-          <p className="text-slate text-lg max-w-2xl text-center mt-6">
-            My career timeline spanning full-stack web development at Dot3 Solutions and independent e-commerce engineering.
-          </p>
+        <div className="space-y-3 mb-12">
+          <div className="section-eyebrow">CAREER TIMELINE</div>
+          <h2 className="section-title">Work Experience</h2>
         </div>
 
-        {/* Timeline container */}
-        <div className="relative max-w-4xl mx-auto pl-6 sm:pl-8 border-l-2 border-slate-dark/60 space-y-12">
+        {/* Vertical Timeline Container */}
+        <div className="relative pl-6 border-l border-[var(--line)] space-y-12 max-w-3xl">
           {experiences.map((exp, idx) => (
-            <div key={idx} className="relative group">
+            <div key={idx} className="relative space-y-3 group">
               
-              {/* Timeline Bullet Node */}
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-navy border-2 border-highlight flex items-center justify-center group-hover:scale-125 group-hover:bg-highlight transition-all">
-                <div className="w-2 h-2 rounded-full bg-highlight group-hover:bg-navy-dark"></div>
+              {/* Small Gold Dot Marker */}
+              <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-[var(--gold)] border-2 border-[var(--bg)] shadow-md group-hover:scale-125 transition-transform"></div>
+
+              {/* Mono Date Range in Gold */}
+              <div className="font-mono text-xs font-bold text-[var(--gold)]">
+                {exp.period}
               </div>
 
-              {/* Card Container */}
-              <div className="bg-navy p-6 sm:p-8 rounded-xl border border-slate-dark/60 hover:border-highlight/40 transition-all shadow-xl space-y-4">
-                
-                {/* Role Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-dark/40 pb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-highlight transition-colors flex items-center gap-2">
-                      <Briefcase size={18} className="text-highlight" />
-                      {exp.role}
-                    </h3>
-                    <p className="text-highlight text-sm font-mono mt-0.5">
-                      {exp.company} • <span className="text-slate">{exp.location}</span>
-                    </p>
-                  </div>
-
-                  <span className="text-xs font-mono text-highlight bg-highlight/10 px-3 py-1.5 rounded-full border border-highlight/20 self-start sm:self-auto flex items-center gap-1.5">
-                    <Calendar size={13} /> {exp.period}
-                  </span>
+              {/* Role & Company */}
+              <div>
+                <h3 className="font-display font-bold text-xl text-[var(--text)]">
+                  {exp.role}
+                </h3>
+                <div className="font-body text-sm text-[var(--muted)]">
+                  {exp.company}
                 </div>
-
-                {/* Description Bullet points */}
-                <ul className="space-y-2.5">
-                  {exp.description.map((bullet, bIdx) => (
-                    <li key={bIdx} className="text-slate text-sm flex items-start gap-2.5 leading-relaxed">
-                      <CheckCircle2 size={16} className="text-highlight flex-shrink-0 mt-0.5" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Tech Badges */}
-                <div className="pt-3 flex flex-wrap gap-2">
-                  {exp.skills.map((skill) => (
-                    <Badge
-                      key={skill}
-                      className="bg-navy-light text-slate-light border-slate-dark text-xs font-mono"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
               </div>
+
+              {/* Bullet List of Achievements */}
+              <ul className="space-y-2 pt-2">
+                {exp.achievements.map((item, aIdx) => (
+                  <li key={aIdx} className="text-sm font-body text-[var(--muted)] flex items-start gap-2.5 leading-relaxed">
+                    <span className="text-[var(--gold)] font-mono font-bold mt-1">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
 
             </div>
           ))}
