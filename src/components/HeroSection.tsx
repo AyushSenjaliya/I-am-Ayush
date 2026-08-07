@@ -9,7 +9,7 @@ const HeroSection = () => {
           {/* Left Column (60% split = 7 cols on lg) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="section-eyebrow">
-              SENIOR FULL STACK & AI SYSTEMS ENGINEER
+              FULL STACK DEVELOPER
             </div>
 
             <h1 className="hero-title">
@@ -18,8 +18,7 @@ const HeroSection = () => {
             </h1>
 
             <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed max-w-xl font-body">
-              Full Stack & AI Systems Engineer with MBA insights. I architect autonomous multi-agent AI frameworks, low-latency microservices, and enterprise applications designed for production scale and measurable revenue.
-            </p>
+              Full Stack Developer with 2+ years building production web apps, e-commerce platforms, and backend systems in React, Next.js, and Node.js. Increasingly drawn to AI engineering — building LLM-integrated tools and exploring how AI can extend what full-stack products can do. </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <a
@@ -35,7 +34,7 @@ const HeroSection = () => {
                 rel="noreferrer"
                 className="border border-[var(--line)] text-[var(--text)] hover:text-[var(--gold)] hover:border-[var(--gold)] bg-transparent font-mono text-sm font-semibold px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2"
               >
-                <FileText size={16} /> Download résumé
+                <FileText size={16} /> Download resume
               </a>
             </div>
           </div>
@@ -60,7 +59,7 @@ const HeroSection = () => {
 
                 <div className="theme-card-nested">
                   <div className="font-mono text-2xl sm:text-3xl font-bold text-[var(--gold)]">
-                    13+
+                    10+
                   </div>
                   <div className="text-xs text-[var(--muted)] font-mono mt-1">
                     Products Shipped
@@ -69,26 +68,26 @@ const HeroSection = () => {
 
                 <div className="theme-card-nested">
                   <div className="font-mono text-2xl sm:text-3xl font-bold text-[var(--gold)]">
-                    5-Agent
+                    MERN
                   </div>
                   <div className="text-xs text-[var(--muted)] font-mono mt-1">
-                    AI AI Cascades
+                    Core Stack
                   </div>
                 </div>
 
                 <div className="theme-card-nested">
                   <div className="font-mono text-2xl sm:text-3xl font-bold text-[var(--gold)]">
-                    8.45
+                    AI
                   </div>
                   <div className="text-xs text-[var(--muted)] font-mono mt-1">
-                    CGPA (B.Sc IT)
+                    Integrated
                   </div>
                 </div>
               </div>
 
               <div className="pt-2 text-xs font-mono text-[var(--muted)] border-t border-[var(--line)] flex items-center justify-between">
                 <span>Location: Surat, India</span>
-                <span className="text-[var(--gold)]">Available for Hire</span>
+                <span className="text-[var(--gold)]">Open to full-time roles</span>
               </div>
             </div>
           </div>

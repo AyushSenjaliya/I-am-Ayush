@@ -1,32 +1,52 @@
 const experiences = [
   {
-    period: "May 2025 — Present",
-    role: "Full Stack & AI Systems Engineering Consultant",
-    company: "Independent Client & Enterprise Projects",
+    period: "Mar 2026 — Jul 2026",
+    role: "Technical Lead – Product & Growth",
+    company: "Asterixz Infotech",
     achievements: [
-      "Architected autonomous multi-agent AI platforms (Nexus & Nexara), reducing manual lead generation & trend research overhead by 40%.",
-      "Engineered real-time Server-Sent Events (SSE) telemetry and WebSockets pipelines, maintaining sub-50ms data streaming latency.",
-      "Integrated 3-tier AI fallback cascades (Gemini API ➔ Sarvam AI ➔ Rule Engines) ensuring 99.9% uptime for automated scraping & pitch generation.",
-      "Delivered custom e-commerce management software with automated order workflows, real-time inventory controls, and payment gateway integrations."
+      "Led the full client lifecycle end-to-end: outreach and sales conversations through to converting prospects into signed engagements.",
+      "Owned product and business strategy — pricing plans, product ideation, and go-to-market approach — alongside technical architecture for client-facing products.",
+      "Designed, developed, and deployed products including Nexus (AI trend intelligence & outreach engine), Nexara (autonomous product validation engine), and several client Shopify stores.",
+      "Operated as a generalist across business development and hands-on engineering — a hybrid scope beyond a typical developer role."
     ]
   },
   {
-    period: "Jun 2024 — April 2025",
-    role: "Full Stack Software Engineer",
+    period: "Nov 2025 — Feb 2026",
+    role: "Full Stack Developer",
+    company: "Oftgen Infotech",
+    achievements: [
+      "Built and shipped Auco (AI code-generation platform), Appy (Gemini + chatbot platform), Leadingly (voice-to-diagram tool), and Codium (design/code workspace) as a full-stack developer.",
+      "Worked across frontend, backend, and AI/LLM integration (Gemini) for each product.",
+      "Learned AI integrations and rapid product development using vibe coding methodologies."
+    ]
+  },
+  {
+    period: "May 2025 — Nov 2025",
+    role: "Full Stack & Shopify Developer",
+    company: "Independent / Freelance",
+    achievements: [
+      "Built and shipped custom Shopify stores end-to-end — theme customization, checkout/payment flow configuration, and UX improvements — for multiple small-business clients.",
+      "Designed and built a custom eCommerce management web app (order tracking, inventory, automated customer notifications) that let non-technical business owners replace manual/spreadsheet-based workflows.",
+      "Integrated Shopify Admin/Storefront APIs with backend systems for real-time, bidirectional order and product sync, removing manual reconciliation between storefront and internal systems.",
+      "Owned each freelance engagement end-to-end: client requirements, architecture, development, and deployment."
+    ]
+  },
+  {
+    period: "Jun 2024 — Apr 2025",
+    role: "Full Stack Developer",
     company: "Dot3 Solutions",
     achievements: [
-      "Architected full-stack features across React, Next.js, Node.js, and NestJS for enterprise business applications.",
-      "Engineered low-latency WebSocket data streaming channels, accelerating real-time client UI updates by 35%.",
-      "Designed normalized PostgreSQL & MongoDB schemas with type-safe Prisma ORM migrations, improving database query response times."
+      "Built and optimized scalable web applications across the stack using React/Next.js on the frontend and Node.js/NestJS on the backend.",
+      "Implemented real-time data features using WebSockets for live-updating dashboards/data systems."
     ]
   },
   {
     period: "Dec 2023 — Jun 2024",
-    role: "Frontend Engineer Intern",
+    role: "React.js Intern",
     company: "Dot3 Solutions",
     achievements: [
-      "Built the core UI for the Accounting Management System, implementing accessible React components and complex multi-step financial forms.",
-      "Integrated TanStack Query, Zustand, and React Hook Form to eliminate unnecessary component re-renders and boost dashboard responsiveness."
+      "Built and optimized scalable web applications across the stack using React/Next.js on the frontend and Node.js/NestJS on the backend.",
+      "Implemented real-time data features using WebSockets for live-updating dashboards/data systems."
     ]
   }
 ];

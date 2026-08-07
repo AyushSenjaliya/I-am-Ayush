@@ -30,7 +30,7 @@ const Index = () => {
         <ProjectsSection />
 
         {/* 6. "See It In Action" — Live Interactive Calculator */}
-        <CalculatorSection />
+        {/* <CalculatorSection /> */}
 
         {/* 7. Product Lab / Case Studies */}
         <ProductLabSection />

@@ -16,7 +16,7 @@ const ContactSection = () => {
       className="py-24 bg-[var(--surface)] border-t border-[var(--line)] text-center relative"
     >
       <div className="max-w-[1080px] mx-auto px-6 space-y-8">
-        
+
         <div className="section-eyebrow">GET IN TOUCH</div>
 
         <h2 className="font-display font-bold text-3xl sm:text-4xl text-[var(--text)] max-w-2xl mx-auto leading-tight">
@@ -59,7 +59,7 @@ const ContactSection = () => {
             rel="noreferrer"
             className="border border-[var(--line)] text-[var(--text)] hover:text-[var(--gold)] hover:border-[var(--gold)] bg-[var(--surface-2)] font-mono text-sm font-semibold px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2"
           >
-            <FileText size={16} /> Résumé PDF
+            <FileText size={16} /> Resume PDF
           </a>
         </div>
 
