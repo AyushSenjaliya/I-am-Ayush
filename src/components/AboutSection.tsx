@@ -1,15 +1,15 @@
 const AboutSection = () => {
   const skillPills = [
     "TypeScript",
-    "Node.js",
     "React 19",
     "Next.js 16",
+    "Node.js",
     "PostgreSQL",
+    "REST & WebSockets",
+    "Fastify",
     "Supabase",
     "Gemini AI",
     "Sarvam AI",
-    "Fastify",
-    "REST & WebSockets",
   ];
 
   return (
@@ -28,14 +28,11 @@ const AboutSection = () => {
           {/* Right Column */}
           <div className="lg:col-span-7 space-y-6 text-[var(--muted)] text-base leading-relaxed font-body">
             <p>
-              I am a Full Stack & AI Systems Engineer based in Surat, India. I specialize in architecting autonomous multi-agent AI frameworks, real-time microservices, and scalable web applications that turn complex requirements into high-performing business software.
-            </p>
+              I'm a Full Stack Developer based in Surat, India, with 2+ years building production web apps, e-commerce platforms, and backend systems using React, Next.js, and Node.js. I like owning projects end-to-end — architecture, backend, frontend, and third-party integrations — turning business requirements into working software.</p>
             <p>
-              Holding a B.Sc in Information Technology and currently pursuing an MBA, I bridge the gap between deep technical execution and commercial strategy—evaluating software architecture through user experience, latency, and business ROI.
-            </p>
+              Alongside a B.Sc in Information Technology, I'm currently pursuing an MBA, which shapes how I think about the business side of what I build — not just the code, but why it matters.</p>
             <p>
-              Over the past 2+ years, I've built enterprise management software, real-time data streaming pipelines, and 3-stage LLM fallback cascades (Gemini + Sarvam AI) that maintain high availability and reliability under load.
-            </p>
+              Over the past 2+ years I've shipped enterprise management tools, real-time data features, and e-commerce systems handling live order sync. I'm now deepening my skills in AI engineering — integrating LLMs like Gemini into production tools and exploring what AI can add to full-stack products.</p>
 
             {/* Skill Pills */}
             <div className="pt-4 flex flex-wrap gap-2">
