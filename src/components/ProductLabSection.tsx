@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { productLabData } from "../data/productLabData";
 
 const ProductLabSection = () => {
-  // Show top 2 experiments on homepage
-  const featuredLab = productLabData.slice(0, 2);
+  // Show top 3 experiments on homepage
+  const featuredLab = productLabData.slice(0, 3);
 
   return (
     <section id="product-lab" className="py-24 bg-[var(--bg)] border-b border-[var(--line)]">
@@ -102,7 +102,7 @@ const ProductLabSection = () => {
         {/* Redirect CTA Line */}
         <div className="theme-card-nested border-[var(--line)] text-center py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs font-mono text-[var(--muted)]">
-            Exploring 4 active R&D prototypes across edge WASM embeddings, stream parsers, and SLM agents.
+            Exploring {productLabData.length} active R&D prototypes across voice intelligence, AI vision, generative CAD/textile design, and edge WASM runtimes.
           </p>
 
           <Link

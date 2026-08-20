@@ -1,7 +1,7 @@
 const experiences = [
   {
     period: "Mar 2026 — Jul 2026",
-    role: "Technical Lead – Product & Growth",
+    role: "Full Stack Developer",
     company: "Asterixz Infotech",
     achievements: [
       "Led the full client lifecycle end-to-end: outreach and sales conversations through to converting prospects into signed engagements.",
@@ -55,7 +55,7 @@ const ExperienceSection = () => {
   return (
     <section id="experience" className="py-24 bg-[var(--bg)] border-b border-[var(--line)]">
       <div className="max-w-[1080px] mx-auto px-6">
-        
+
         {/* Header */}
         <div className="space-y-3 mb-12">
           <div className="section-eyebrow">CAREER TIMELINE</div>
@@ -66,7 +66,7 @@ const ExperienceSection = () => {
         <div className="relative pl-6 border-l border-[var(--line)] space-y-12 max-w-3xl">
           {experiences.map((exp, idx) => (
             <div key={idx} className="relative space-y-3 group">
-              
+
               {/* Small Gold Dot Marker */}
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-[var(--gold)] border-2 border-[var(--bg)] shadow-md group-hover:scale-125 transition-transform"></div>
 

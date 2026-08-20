@@ -12,6 +12,50 @@ export interface ProductLabItem {
 
 export const productLabData: ProductLabItem[] = [
   {
+    id: "dental-clinic-ai-crm",
+    title: "Dental Clinic Management CRM + AI Diagnostic & Voice Intelligence",
+    status: "R&D Prototype — Active",
+    statusType: "gold",
+    problem: "Dental clinics struggle with fragmented patient consultations, manual diagnostic report & X-ray analysis, and time-consuming custom disease treatment plan drafting.",
+    approach: "Next-gen Dental CRM combining patient & appointment management with an AI/voice layer: Gemini Vision multimodal analysis for X-rays & diagnostic reports, AI disease treatment plan generation, Speech-to-Text (STT) consultation transcription, Text-to-Speech (TTS) voice interaction, and automated meeting notes with action items.",
+    whyShelved: "Active R&D Concept — Evaluated AI vision models (Gemini Flash Vision) for dental radiograph evaluation alongside Whisper streaming latency for real-time consultation transcription.",
+    whatItTakes: "HIPAA-compliant data store, fine-tuned medical vision SLM for dental radiograph evaluation, and sub-second audio streaming WebSockets.",
+    tags: ["Dental CRM", "AI Vision X-Ray", "Speech-to-Text (STT)", "Text-to-Speech (TTS)", "Treatment Plan AI"]
+  },
+  {
+    id: "voice-intelligence-platform",
+    title: "Voice Intelligence Platform & Real-Time Audio Engine",
+    status: "R&D Concept — Active",
+    statusType: "gold",
+    problem: "Building separate custom voice pipelines (STT, TTS, meeting notes, translation) for individual apps causes duplicated API logic, streaming latency, and high cloud costs.",
+    approach: "Unified multi-tenant Voice Intelligence platform providing Text-to-Speech (TTS), Speech-to-Text (STT), real-time consultation transcription, speaker diarization, automated meeting summaries, action-item extraction, and real-time multilingual translation.",
+    whyShelved: "CTO Architecture Concept — Evaluated real-time WebSockets streaming latency, token unit economics, API fallback cascades, and speaker diarization performance.",
+    whatItTakes: "Deploying quantized local Whisper / VAD models on GPU edge nodes (Modal/RunPod) with sub-200ms WebSockets streaming pipeline.",
+    tags: ["Voice Intelligence", "Speech-to-Text", "Text-to-Speech", "Audio Streaming", "Speaker Diarization"]
+  },
+  {
+    id: "artificial-jewelry-manufacturing-crm",
+    title: "Imitation & Artificial Jewelry Manufacturing ERP/CRM",
+    status: "Domain Research Phase",
+    statusType: "coral",
+    problem: "Surat's imitation jewelry manufacturers rely on paper logs or generic software that fails to model raw material tracking, multi-stage job work, and design inventory.",
+    approach: "Specialized ERP/CRM system engineered specifically for the imitation jewelry manufacturing lifecycle: customer history, order tracking, job work stage monitoring (casting, plating, stone setting), raw material stock ledgers, and business profit reporting.",
+    whyShelved: "Domain Research Completed — Deep ecosystem study conducted across Surat's imitation jewelry manufacturing units to map multi-stage job-work lifecycles.",
+    whatItTakes: "Building an offline-first tablet interface for workshop floor job-work tracking and multi-tier raw material Bill of Materials (BOM).",
+    tags: ["Jewelry Manufacturing ERP", "Surat Ecosystem", "Job-Work Tracking", "Raw Material BOM", "Production CRM"]
+  },
+  {
+    id: "ai-textile-jewelry-design-assistant",
+    title: "AI Jewelry & Textile Design Assistant (Wilcom & CAD Connector)",
+    status: "Product Concept — Active",
+    statusType: "gold",
+    problem: "Jewelry and textile/embroidery designers waste hours manually vectorizing design concepts in Wilcom or CAD software from client descriptions or paper sketches.",
+    approach: "AI generative design assistant allowing designers to chat with an AI prompt interface to describe concept patterns; a high-capability generative model creates design concepts and exports vector patterns directly into existing software (Wilcom, CAD) with historical design tracking.",
+    whyShelved: "Product Concept Phase — Explored pairing high-capability image/vector generative models with vectorization pipelines and Wilcom/CAD file export plugins.",
+    whatItTakes: "Fine-tuning a diffusion model on embroidery stitch & jewelry vector datasets and developing a Wilcom/CAD file export plugin.",
+    tags: ["AI Generative Design", "Textile & Embroidery", "Wilcom Integration", "Jewelry CAD", "Generative AI"]
+  },
+  {
     id: "autonomous-inventory-agent",
     title: "Autonomous Multi-Warehouse Inventory Rebalancer",
     status: "Shelved — timing",

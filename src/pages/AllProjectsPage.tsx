@@ -11,7 +11,7 @@ const AllProjectsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "AI Multi-Agent System", "AI & Code Generation", "Enterprise Software", "eCommerce Systems"];
+  const categories = ["All", ...Array.from(new Set(projectsData.map((p) => p.category)))];
 
   const filteredProjects = projectsData.filter((project) => {
     const matchesSearch =

@@ -13,7 +13,7 @@ const initialKnowledge: Record<string, string> = {
   nexus: "Nexus is an autonomous 5-agent B2B market intelligence & outreach platform. Agent 1 (Market Intel) ➔ Agent 2 (Grid Density Scraper + Email Verifier) ➔ Agent 3 (ICP Scorer) ➔ Agent 4 (Pitch Strategist) ➔ Agent 5 (Outreach Sequencer via Email & WhatsApp Web JS). Powered by Node.js, Express, React, Supabase PostgreSQL, and a 3-tier AI cascade (Gemini + Sarvam).",
   nexara: "Nexara is an AI trend intelligence & e-commerce product discovery engine. It scrapes viral TikTok videos (>100k views), validates supplier margins on AliExpress, checks Meta Ads Library ad saturation, maps human desire framing, and scores products dynamically via a weighted learning loop. Powered by Fastify 4, Next.js 16, React 19, MongoDB, and Gemini/Sarvam/OpenAI fallback chain.",
   education: "Ayush is pursuing an MBA (Masters of Business Administration) at Parul University (2024–Present) and holds a B.Sc. in Information Technology from Sarvajanik University (2021–2024) with a distinction CGPA of 8.45 / 10.",
-  experience: "Ayush's work experience includes: 1) Technical Lead – Product & Growth at Asterixz Infotech (Mar 2026–Jul 2026), leading product/business strategy, client acquisition & engineering for Nexus, Nexara & Shopify stores. 2) Full Stack Developer at Oftgen Infotech (Nov 2025–Feb 2026), building Auco, Appy, Leadingly, & Codium. 3) Full Stack & Shopify Developer - Independent / Freelance (May 2025–Nov 2025), building custom Shopify stores & e-commerce OMS. 4) Full Stack Developer at Dot3 Solutions (Jun 2024–Apr 2025). 5) React.js Intern at Dot3 Solutions (Dec 2023–Jun 2024).",
+  experience: "Ayush's work experience includes: 1) Full Stack Developer at Asterixz Infotech (Mar 2026–Jul 2026), leading product/business strategy, client acquisition & engineering for Nexus, Nexara & Shopify stores. 2) Full Stack Developer at Oftgen Infotech (Nov 2025–Feb 2026), building Auco, Appy, Leadingly, & Codium. 3) Full Stack & Shopify Developer - Independent / Freelance (May 2025–Nov 2025), building custom Shopify stores & e-commerce OMS. 4) Full Stack Developer at Dot3 Solutions (Jun 2024–Apr 2025). 5) React.js Intern at Dot3 Solutions (Dec 2023–Jun 2024).",
   projects: "Ayush has built 13 major applications: 1) Nexus (5-Agent B2B AI), 2) Nexara (AI Trend Engine), 3) Auco (UI Code Generator), 4) Appy (Gemini RAG Bot), 5) Leadingly (Voice Diagrammer), 6) Codium (Electron IDE), 7) WealthBook (React Native), 8) Real-Time Stock Analytics, 9) Shopify Ecom OMS, 10) Maxzope Import BMS, 11) Clinic Management, 12) Garment Costing, 13) Accounting System.",
   contact: "Ayush is based in Surat, Gujarat, India. Phone/WhatsApp: +91 9638215983 | Email: aayushsenjaliya@gmail.com | LinkedIn: linkedin.com/in/ayushsenjaliya."
 };
@@ -150,8 +150,8 @@ const AIChatModal = () => {
               >
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs ${msg.sender === "user"
-                      ? "bg-highlight text-navy-dark font-bold"
-                      : "bg-navy-light text-highlight border border-highlight/30"
+                    ? "bg-highlight text-navy-dark font-bold"
+                    : "bg-navy-light text-highlight border border-highlight/30"
                     }`}
                 >
                   {msg.sender === "user" ? <User size={14} /> : <Bot size={14} />}
@@ -159,8 +159,8 @@ const AIChatModal = () => {
 
                 <div
                   className={`max-w-[80%] p-3 rounded-xl text-xs leading-relaxed ${msg.sender === "user"
-                      ? "bg-highlight/15 border border-highlight/30 text-white rounded-tr-none font-medium"
-                      : "bg-navy-light/80 border border-slate-dark/60 text-slate-light rounded-tl-none"
+                    ? "bg-highlight/15 border border-highlight/30 text-white rounded-tr-none font-medium"
+                    : "bg-navy-light/80 border border-slate-dark/60 text-slate-light rounded-tl-none"
                     }`}
                 >
                   <p>{msg.text}</p>
