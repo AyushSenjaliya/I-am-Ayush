@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import AllProjectsPage from "./pages/AllProjectsPage";
 import AllProductLabPage from "./pages/AllProductLabPage";
 import NotFound from "./pages/NotFound";
+import AIChatModal from "./components/AIChatModal";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +24,12 @@ const App = () => (
           {/* CATCH-ALL ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {/* AI Website Sales Agent Floating Drawer (Visible on all pages) */}
+        <AIChatModal />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
 
 export default App;
+
