@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Bot, User, Sparkles, PhoneCall, CheckCircle, RotateCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState, useRef, useEffect } from "react";
+import { X, Send, PhoneCall, CheckCircle, RotateCcw, MessageSquare, ArrowRight, Mail } from "lucide-react";
 import { streamAgentChat, submitAgentLead } from "@/api/agentApi";
 
 interface Message {
@@ -10,20 +9,39 @@ interface Message {
   timestamp: string;
   recommendations?: Array<{ id: string; title: string; category: string; summary?: string }>;
   salesStage?: string;
+  isFallback?: boolean;
 }
 
-const quickPromptQueries: Record<string, string> = {
-  nexus: "Tell me about Nexus autonomous 5-agent B2B intelligence platform.",
-  nexara: "Tell me about Nexara AI trend intelligence & e-commerce engine.",
-  projects: "What portfolio projects has Ayush built?",
-  contact: "How can I contact or hire Ayush?",
+const STORAGE_KEY = "ayush_portfolio_chat_v3";
+
+const INITIAL_WELCOME_MESSAGE: Message = {
+  id: "welcome",
+  sender: "ai",
+  text: "Hi! I can help scope your project, answer questions about Ayush's engineering work, or connect you with him directly.",
+  timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
 };
+
+const INITIAL_CHIPS = [
+  { label: "⚡ Need a Custom Web App", query: "I need a custom full-stack web application built." },
+  { label: "🤖 Need AI / Automation Systems", query: "I need AI feature integration or multi-agent automation systems." },
+  { label: "💼 Hiring for a Role", query: "I am looking to hire a Full Stack / AI Engineer." },
+  { label: "🚀 Just Exploring Projects", query: "What are Ayush's top portfolio projects and tech stack?" },
+];
+
+const FALLBACK_CHIPS = [
+  { label: "🚀 Explore Top Projects", query: "Show me Ayush's top featured portfolio projects." },
+  { label: "📧 Email Ayush Directly", action: "email" },
+  { label: "📋 Fill Quick Contact Form", action: "lead" },
+];
 
 const AIChatModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId, setSessionId] = useState(() => `session_${Date.now()}`);
   const [activeStage, setActiveStage] = useState<string>("DISCOVERY");
   const [showLeadForm, setShowLeadForm] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  // Form state
   const [leadName, setLeadName] = useState("");
   const [leadEmail, setLeadEmail] = useState("");
   const [leadCompany, setLeadCompany] = useState("");
@@ -31,23 +49,41 @@ const AIChatModal = () => {
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const [leadSubmittedSuccess, setLeadSubmittedSuccess] = useState(false);
 
-  const initialWelcomeMsg: Message = {
-    id: "welcome",
-    sender: "ai",
-    text: "Hi! I'm Ayush's AI Sales Agent. Ask me anything about Nexus (5-Agent B2B Outreach), Nexara (AI Trend Engine), his 13 portfolio projects, or hiring/freelance opportunities!",
-    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-  };
+  // Message & Stream state
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.messages && parsed.messages.length > 0) {
+          return parsed.messages;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not parse saved chat history:", e);
+    }
+    return [INITIAL_WELCOME_MESSAGE];
+  });
 
-  const [messages, setMessages] = useState<Message[]>([initialWelcomeMsg]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const handleResetConversation = () => {
-    setSessionId(`session_${Date.now()}`);
-    setMessages([initialWelcomeMsg]);
-    setActiveStage("DISCOVERY");
-  };
+  // Sync state to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          sessionId,
+          activeStage,
+          messages,
+        })
+      );
+    } catch (e) {
+      console.warn("Failed to persist chat state to localStorage:", e);
+    }
+  }, [messages, sessionId, activeStage]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,32 +93,40 @@ const AIChatModal = () => {
     if (isOpen) {
       scrollToBottom();
     }
-  }, [messages, isOpen]);
+  }, [messages, isTyping, isOpen]);
 
-  const quickPrompts = [
-    { label: "🤖 Nexus AI Agent", key: "nexus" },
-    { label: "🔥 Nexara Trend Engine", key: "nexara" },
-    { label: "🚀 View All Projects", key: "projects" },
-    { label: "📞 Contact & Hiring Info", key: "contact" },
-  ];
+  const handleResetConversation = () => {
+    const newSession = `session_${Date.now()}`;
+    setSessionId(newSession);
+    setMessages([INITIAL_WELCOME_MESSAGE]);
+    setActiveStage("DISCOVERY");
+    setHasInteracted(false);
+    setShowLeadForm(false);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
+  };
 
   const handleSendMessage = (textToSend?: string) => {
     const query = (textToSend || inputValue).trim();
     if (!query || isTyping) return;
 
+    setHasInteracted(true);
+    const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: `user_${Date.now()}`,
       sender: "user",
       text: query,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: timeStr,
     };
 
-    const aiMsgId = (Date.now() + 1).toString();
+    const aiMsgId = `ai_${Date.now() + 1}`;
     const initialAiMsg: Message = {
       id: aiMsgId,
       sender: "ai",
       text: "",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: timeStr,
     };
 
     setMessages((prev) => [...prev, userMsg, initialAiMsg]);
@@ -105,9 +149,7 @@ const AIChatModal = () => {
       onToken: (token) => {
         setIsTyping(false);
         setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === aiMsgId ? { ...msg, text: msg.text + token } : msg
-          )
+          prev.map((msg) => (msg.id === aiMsgId ? { ...msg, text: msg.text + token } : msg))
         );
       },
       onDone: () => {
@@ -120,9 +162,10 @@ const AIChatModal = () => {
             msg.id === aiMsgId
               ? {
                   ...msg,
+                  isFallback: true,
                   text:
                     msg.text ||
-                    `I'm having trouble connecting right now (${errText}). You can contact Ayush directly at +91 9638215983 or aayushsenjaliya@gmail.com!`,
+                    `I'm having trouble connecting to the live AI service right now. However, you can explore Ayush's projects or connect with him directly below!`,
                 }
               : msg
           )
@@ -155,9 +198,9 @@ const AIChatModal = () => {
       }, 2000);
 
       const confirmMsg: Message = {
-        id: Date.now().toString(),
+        id: `confirm_${Date.now()}`,
         sender: "ai",
-        text: `Thank you ${leadName || "there"}! Your details have been received. Ayush will review your inquiry and get back to you shortly at ${leadEmail}.`,
+        text: `Thank you ${leadName || "there"}! Your details have been received. Ayush will review your project inquiry and get back to you at ${leadEmail}.`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, confirmMsg]);
@@ -165,219 +208,289 @@ const AIChatModal = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-
-      {/* Floating Trigger Button */}
+    <div className="z-50">
+      {/* Floating Launcher Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-highlight text-navy-dark hover:bg-highlight/90 p-4 rounded-full shadow-2xl flex items-center gap-2.5 font-bold text-sm transition-all hover:scale-105 border-2 border-navy group"
-          aria-label="Open AI Assistant"
+          className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 bg-[var(--gold)] text-[var(--bg)] hover:bg-[#d99f38] px-4 py-3.5 rounded-full shadow-[0_10px_30px_rgba(232,176,75,0.25)] border border-[var(--gold)]/40 flex items-center gap-3 font-display font-bold text-xs tracking-wide transition-all transform hover:scale-105 animate-pulse-once group"
+          aria-label="Open Chat with Ayush's Assistant"
         >
-          <Bot size={22} className="animate-bounce" />
-          <span className="hidden sm:inline font-mono">Ask Ayush</span>
+          {/* Brand Initial Badge (No Cheesy Emoji) */}
+          <span className="w-6 h-6 rounded-full bg-[#0F1B1E] text-[var(--gold)] font-mono text-[10px] font-bold flex items-center justify-center border border-[var(--gold)]/30">
+            AS
+          </span>
+          <span className="font-semibold tracking-normal">Scope a Project</span>
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-navy-dark opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-navy-dark"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0F1B1E] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0F1B1E]"></span>
           </span>
         </button>
       )}
 
-      {/* Chat Modal Drawer */}
+      {/* Chat Window Shell */}
       {isOpen && (
-        <div className="bg-navy border border-highlight/40 rounded-2xl w-[90vw] sm:w-[390px] h-[540px] shadow-2xl flex flex-col overflow-hidden animate-fade-in relative">
-
+        <div
+          className={`fixed z-50 bg-[#0F1B1E] border border-[var(--line)] shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_25px_rgba(232,176,75,0.08)] flex flex-col overflow-hidden transition-all duration-200 ease-out transform scale-100 opacity-100 ${
+            /* Mobile Full-Screen Takeover, Desktop ~380px Floating Box */
+            "inset-0 w-full h-full rounded-none sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[580px] sm:rounded-[20px]"
+          }`}
+        >
           {/* Header */}
-          <div className="bg-navy-dark p-3.5 border-b border-slate-dark/60 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-highlight/10 rounded-full text-highlight">
-                <Bot size={20} />
+          <div className="bg-[#16262A] px-4 py-3.5 border-b border-[var(--line)] flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-3">
+              {/* Brand Initial Avatar */}
+              <div className="w-8 h-8 rounded-full bg-[var(--gold)]/10 border border-[var(--gold)]/40 flex items-center justify-center text-[var(--gold)] font-mono font-bold text-xs">
+                AS
               </div>
               <div>
-                <h4 className="text-white font-bold text-sm flex items-center gap-1.5">
-                  Ayush's AI Sales Agent <Sparkles size={13} className="text-highlight" />
+                <h4 className="text-[var(--text)] font-display font-bold text-sm tracking-tight leading-none flex items-center gap-2">
+                  Ayush's Assistant
                 </h4>
-                <p className="text-[11px] font-mono text-highlight">🟢 Surat, India • Online ({activeStage})</p>
+                <p className="text-[10px] font-mono text-[var(--gold)] mt-1 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Available for Projects
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={handleResetConversation}
-                className="text-slate-light hover:text-highlight p-1 rounded transition-colors"
-                title="Reset Conversation"
-                aria-label="Reset Conversation"
+                className="text-[var(--muted)] hover:text-[var(--gold)] p-1.5 rounded-lg transition-colors"
+                title="Reset conversation"
+                aria-label="Reset conversation"
               >
-                <RotateCcw size={16} />
+                <RotateCcw size={15} />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-slate-light hover:text-white p-1 rounded"
-                aria-label="Close AI Chat"
+                className="text-[var(--muted)] hover:text-[var(--text)] p-1.5 rounded-lg transition-colors"
+                aria-label="Close chat"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
           </div>
 
-
           {/* Messages Body */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-navy/90 relative">
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#0F1B1E]/95 relative">
             {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex gap-2.5 ${msg.sender === "user" ? "flex-row-reverse" : "flex-row"}`}
-              >
+              <div key={msg.id} className="space-y-2">
                 <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs ${msg.sender === "user"
-                    ? "bg-highlight text-navy-dark font-bold"
-                    : "bg-navy-light text-highlight border border-highlight/30"
-                    }`}
+                  className={`flex gap-2.5 items-start ${
+                    msg.sender === "user" ? "justify-end" : "justify-start"
+                  }`}
                 >
-                  {msg.sender === "user" ? <User size={14} /> : <Bot size={14} />}
-                </div>
-
-                <div
-                  className={`max-w-[85%] p-3 rounded-xl text-xs leading-relaxed ${msg.sender === "user"
-                    ? "bg-highlight/15 border border-highlight/30 text-white rounded-tr-none font-medium"
-                    : "bg-navy-light/80 border border-slate-dark/60 text-slate-light rounded-tl-none"
-                    }`}
-                >
-                  <p>{msg.text}</p>
-
-                  {/* Render Recommended Project Cards */}
-                  {msg.recommendations && msg.recommendations.length > 0 && (
-                    <div className="mt-2.5 pt-2 border-t border-slate-dark/60 space-y-2">
-                      <p className="text-[10px] font-mono text-highlight font-semibold uppercase tracking-wider">
-                        ✨ Recommended Projects:
-                      </p>
-                      {msg.recommendations.map((rec) => (
-                        <div
-                          key={rec.id}
-                          className="bg-navy/80 border border-highlight/30 rounded-lg p-2 flex flex-col gap-1 hover:border-highlight transition-all"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="font-bold text-[11px] text-white">{rec.title}</span>
-                            <span className="text-[9px] font-mono text-highlight bg-highlight/10 px-1.5 py-0.5 rounded">
-                              {rec.category}
-                            </span>
-                          </div>
-                          {rec.summary && (
-                            <p className="text-[10px] text-slate-light line-clamp-2">{rec.summary}</p>
-                          )}
-                        </div>
-                      ))}
+                  {/* Bot Avatar (No Robot Emoji) */}
+                  {msg.sender === "ai" && (
+                    <div className="w-6 h-6 rounded-full bg-[#16262A] border border-[var(--gold)]/30 text-[var(--gold)] font-mono text-[9px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      AS
                     </div>
                   )}
 
-                  <span className="block text-[10px] text-slate-dark text-right mt-1 font-mono">
-                    {msg.timestamp}
-                  </span>
+                  {/* Bubble Content */}
+                  <div
+                    className={`max-w-[84%] text-xs font-body leading-relaxed transition-all ${
+                      msg.sender === "user"
+                        ? "bg-[var(--gold)] text-[#0F1B1E] font-medium rounded-[18px] rounded-tr-[4px] px-3.5 py-2.5 shadow-sm"
+                        : "bg-[#16262A] border border-[var(--line)] text-[var(--text)] rounded-[18px] rounded-tl-[4px] px-3.5 py-2.5 shadow-sm"
+                    }`}
+                  >
+                    {msg.text && <p className="whitespace-pre-wrap">{msg.text}</p>}
+
+                    {/* Render Recommended Project Cards if present */}
+                    {msg.recommendations && msg.recommendations.length > 0 && (
+                      <div className="mt-3 pt-2.5 border-t border-[var(--line)] space-y-2">
+                        <p className="text-[10px] font-mono text-[var(--gold)] uppercase tracking-wider font-semibold">
+                          Featured Work Fit:
+                        </p>
+                        {msg.recommendations.map((rec) => (
+                          <div
+                            key={rec.id}
+                            className="bg-[#1C2E32] border border-[var(--line)] hover:border-[var(--gold)]/40 rounded-xl p-2.5 transition-all text-left group"
+                          >
+                            <div className="flex items-center justify-between gap-2 mb-1">
+                              <span className="font-display font-bold text-[11px] text-[var(--text)] group-hover:text-[var(--gold)] transition-colors">
+                                {rec.title}
+                              </span>
+                              <span className="text-[9px] font-mono text-[var(--gold)] bg-[var(--gold)]/10 px-1.5 py-0.5 rounded-md border border-[var(--gold)]/20">
+                                {rec.category}
+                              </span>
+                            </div>
+                            {rec.summary && (
+                              <p className="text-[10px] text-[var(--muted)] line-clamp-2 leading-normal">
+                                {rec.summary}
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Fallback Action Buttons */}
+                    {msg.isFallback && (
+                      <div className="mt-3 pt-2.5 border-t border-[var(--line)] flex flex-col gap-1.5">
+                        {FALLBACK_CHIPS.map((chip, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              if (chip.query) handleSendMessage(chip.query);
+                              if (chip.action === "email") window.open("mailto:aayushsenjaliya@gmail.com");
+                              if (chip.action === "lead") setShowLeadForm(true);
+                            }}
+                            className="text-left text-[11px] font-mono text-[var(--gold)] bg-[#1C2E32] hover:bg-[var(--gold)]/10 border border-[var(--gold)]/30 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between"
+                          >
+                            <span>{chip.label}</span>
+                            <ArrowRight size={12} />
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    <span
+                      className={`block text-[9px] font-mono text-right mt-1 opacity-60 ${
+                        msg.sender === "user" ? "text-[#0F1B1E]" : "text-[var(--muted)]"
+                      }`}
+                    >
+                      {msg.timestamp}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
 
+            {/* Enterprise 3-Dot Typing Indicator */}
             {isTyping && (
-              <div className="flex gap-2 items-center text-xs text-highlight font-mono bg-navy-light/40 p-2.5 rounded-lg w-fit">
-                <Bot size={14} className="animate-spin" /> AI is thinking...
+              <div className="flex gap-2.5 items-start">
+                <div className="w-6 h-6 rounded-full bg-[#16262A] border border-[var(--gold)]/30 text-[var(--gold)] font-mono text-[9px] font-bold flex items-center justify-center shrink-0">
+                  AS
+                </div>
+                <div className="bg-[#16262A] border border-[var(--line)] rounded-full px-3.5 py-2.5 flex items-center gap-1.5 w-fit shadow-sm">
+                  <span className="typing-dot typing-dot-1"></span>
+                  <span className="typing-dot typing-dot-2"></span>
+                  <span className="typing-dot typing-dot-3"></span>
+                </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Lead Capture Overlay Form */}
+          {/* Quick-Reply Chips for First Interaction */}
+          {!hasInteracted && messages.length <= 1 && (
+            <div className="px-3.5 py-2.5 bg-[#16262A]/90 border-t border-[var(--line)]">
+              <p className="text-[10px] font-mono text-[var(--muted)] mb-2">Suggested topics:</p>
+              <div className="flex flex-wrap gap-1.5">
+                {INITIAL_CHIPS.map((chip, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSendMessage(chip.query)}
+                    className="text-[11px] font-body text-[var(--text)] bg-[#1C2E32] hover:text-[var(--gold)] hover:border-[var(--gold)]/50 border border-[var(--line)] px-2.5 py-1.5 rounded-lg transition-colors text-left"
+                  >
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Lead Capture Form Modal Overlay */}
           {showLeadForm && (
-            <div className="absolute inset-0 bg-navy-dark/95 backdrop-blur-md z-20 p-4 flex flex-col justify-center animate-fade-in">
-              <div className="flex justify-between items-center mb-3">
-                <h4 className="text-white font-bold text-sm flex items-center gap-1.5">
-                  <PhoneCall size={16} className="text-highlight" /> Connect with Ayush
+            <div className="absolute inset-0 bg-[#0F1B1E]/98 backdrop-blur-md z-20 p-5 flex flex-col justify-center animate-fade-in">
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="font-display text-[var(--text)] font-bold text-sm flex items-center gap-2">
+                  <PhoneCall size={16} className="text-[var(--gold)]" /> Connect with Ayush
                 </h4>
-                <button onClick={() => setShowLeadForm(false)} className="text-slate-light hover:text-white">
+                <button
+                  onClick={() => setShowLeadForm(false)}
+                  className="text-[var(--muted)] hover:text-[var(--text)]"
+                >
                   <X size={18} />
                 </button>
               </div>
 
               {leadSubmittedSuccess ? (
-                <div className="flex flex-col items-center justify-center py-8 text-center text-highlight">
-                  <CheckCircle size={40} className="animate-bounce mb-2" />
-                  <p className="font-bold text-sm">Message Sent Successfully!</p>
+                <div className="flex flex-col items-center justify-center py-10 text-center text-[var(--gold)]">
+                  <CheckCircle size={44} className="animate-bounce mb-3" />
+                  <p className="font-display font-bold text-sm text-[var(--text)]">Inquiry Submitted!</p>
+                  <p className="text-xs text-[var(--muted)] font-body mt-1">
+                    Ayush will review your details and reach out shortly.
+                  </p>
                 </div>
               ) : (
-                <form onSubmit={handleLeadSubmit} className="space-y-2.5">
+                <form onSubmit={handleLeadSubmit} className="space-y-3 font-body">
                   <div>
-                    <label className="text-[10px] font-mono text-slate-light block mb-1">Your Name</label>
+                    <label className="text-[10px] font-mono text-[var(--muted)] block mb-1">Name</label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Sarah Connor"
+                      placeholder="e.g. Alex Mercer"
                       value={leadName}
                       onChange={(e) => setLeadName(e.target.value)}
-                      className="w-full bg-navy border border-slate-dark/80 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder:text-slate focus:border-highlight focus:outline-none"
+                      className="w-full bg-[#16262A] border border-[var(--line)] rounded-xl px-3 py-2 text-xs text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--gold)] focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-slate-light block mb-1">Email Address</label>
+                    <label className="text-[10px] font-mono text-[var(--muted)] block mb-1">Email</label>
                     <input
                       type="email"
                       required
-                      placeholder="sarah@company.com"
+                      placeholder="alex@company.com"
                       value={leadEmail}
                       onChange={(e) => setLeadEmail(e.target.value)}
-                      className="w-full bg-navy border border-slate-dark/80 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder:text-slate focus:border-highlight focus:outline-none"
+                      className="w-full bg-[#16262A] border border-[var(--line)] rounded-xl px-3 py-2 text-xs text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--gold)] focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-slate-light block mb-1">Company / Organization (Optional)</label>
+                    <label className="text-[10px] font-mono text-[var(--muted)] block mb-1">
+                      Company / Role (Optional)
+                    </label>
                     <input
                       type="text"
-                      placeholder="Acme Corp"
+                      placeholder="Acme Corp / Founder"
                       value={leadCompany}
                       onChange={(e) => setLeadCompany(e.target.value)}
-                      className="w-full bg-navy border border-slate-dark/80 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder:text-slate focus:border-highlight focus:outline-none"
+                      className="w-full bg-[#16262A] border border-[var(--line)] rounded-xl px-3 py-2 text-xs text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--gold)] focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-slate-light block mb-1">Project Need / Message</label>
+                    <label className="text-[10px] font-mono text-[var(--muted)] block mb-1">
+                      Project Goal / Note
+                    </label>
                     <textarea
                       rows={2}
-                      placeholder="Tell Ayush about your project or role requirement..."
+                      placeholder="Brief note about what you're looking to build..."
                       value={leadSummary}
                       onChange={(e) => setLeadSummary(e.target.value)}
-                      className="w-full bg-navy border border-slate-dark/80 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder:text-slate focus:border-highlight focus:outline-none resize-none"
+                      className="w-full bg-[#16262A] border border-[var(--line)] rounded-xl px-3 py-2 text-xs text-[var(--text)] placeholder:text-[var(--muted)]/50 focus:border-[var(--gold)] focus:outline-none resize-none"
                     />
                   </div>
-                  <Button
+                  <button
                     type="submit"
                     disabled={isSubmittingLead}
-                    className="w-full bg-highlight text-navy-dark font-bold hover:bg-highlight/90 py-2 text-xs rounded-lg mt-2"
+                    className="w-full bg-[var(--gold)] text-[#0F1B1E] font-display font-bold hover:bg-[#d99f38] py-2.5 text-xs rounded-xl transition-all shadow-md mt-1"
                   >
                     {isSubmittingLead ? "Submitting..." : "Submit Inquiry"}
-                  </Button>
+                  </button>
                 </form>
               )}
             </div>
           )}
 
-          {/* Quick Prompts & CTA Trigger Bar */}
-          <div className="px-3 py-2 bg-navy-dark/80 border-t border-slate-dark/40 flex items-center justify-between gap-1.5 overflow-x-auto">
-            <div className="flex gap-1.5">
-              {quickPrompts.map((qp) => (
-                <button
-                  key={qp.key}
-                  onClick={() => handleSendMessage(quickPromptQueries[qp.key])}
-                  className="whitespace-nowrap text-[10px] font-mono text-slate-light bg-navy hover:text-highlight hover:border-highlight border border-slate-dark px-2.5 py-1 rounded-full transition-colors"
-                >
-                  {qp.label}
-                </button>
-              ))}
-            </div>
-
+          {/* Quick Contact Action Bar */}
+          <div className="px-3.5 py-2 bg-[#16262A] border-t border-[var(--line)] flex items-center justify-between gap-2 shrink-0">
             <button
               onClick={() => setShowLeadForm(true)}
-              className="whitespace-nowrap text-[10px] font-mono font-bold text-navy-dark bg-highlight hover:bg-highlight/90 px-3 py-1 rounded-full shadow transition-all flex items-center gap-1"
+              className="text-[10px] font-mono text-[var(--gold)] hover:text-[#f3c569] flex items-center gap-1.5 transition-colors"
             >
-              <PhoneCall size={11} /> Contact
+              <PhoneCall size={12} /> Direct Contact / Lead Form
             </button>
+            <a
+              href="mailto:aayushsenjaliya@gmail.com"
+              className="text-[10px] font-mono text-[var(--muted)] hover:text-[var(--text)] flex items-center gap-1 transition-colors"
+            >
+              <Mail size={12} /> Email
+            </a>
           </div>
 
           {/* Input Box */}
@@ -386,30 +499,28 @@ const AIChatModal = () => {
               e.preventDefault();
               handleSendMessage();
             }}
-            className="p-3 bg-navy-dark border-t border-slate-dark/60 flex items-center gap-2"
+            className="p-3 bg-[#16262A] border-t border-[var(--line)] flex items-center gap-2 shrink-0"
           >
             <input
               type="text"
-              placeholder="Ask about Nexus, Nexara, Projects..."
+              placeholder="Ask a question or describe your project..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="flex-1 bg-navy border border-slate-dark/80 rounded-lg px-3 py-2 text-xs text-white placeholder:text-slate focus:border-highlight focus:outline-none"
+              className="flex-1 bg-[#0F1B1E] border border-[var(--line)] rounded-xl px-3.5 py-2 text-xs text-[var(--text)] placeholder:text-[var(--muted)]/60 focus:border-[var(--gold)]/60 focus:outline-none font-body"
             />
-            <Button
+            <button
               type="submit"
-              className="bg-highlight text-navy-dark hover:bg-highlight/90 p-2 rounded-lg"
+              disabled={!inputValue.trim() || isTyping}
+              className="bg-[var(--gold)] text-[#0F1B1E] hover:bg-[#d99f38] disabled:opacity-40 p-2 rounded-xl transition-colors shrink-0"
               aria-label="Send message"
             >
               <Send size={15} />
-            </Button>
+            </button>
           </form>
-
         </div>
       )}
-
     </div>
   );
 };
 
 export default AIChatModal;
-
