@@ -65,8 +65,8 @@ export const projectsData: ProjectItem[] = [
     whyImportant: "Demonstrates strong enterprise software engineering capabilities by translating a complex real-world business process into software rather than simple CRUD demos.",
     technologies: ["React", "Node.js", "Express", "PostgreSQL", "REST APIs", "Tailwind CSS", "Recharts"],
     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    githubUrl: "",
+    liveUrl: "https://import-os-smoky.vercel.app/",
     featured: true
   },
   {
@@ -106,8 +106,8 @@ export const projectsData: ProjectItem[] = [
     whyImportant: "Production-ready system demonstrating practical expertise in building e-commerce tools, Shopify ecosystem integrations, and commercial workflow automation that impress interviewers.",
     technologies: ["React", "Node.js", "Shopify API", "GraphQL", "MongoDB", "Express", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1556742049-0a67568d04e3?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    githubUrl: "",
+    liveUrl: "https://ordexa-seven.vercel.app/",
     featured: true
   },
   {
@@ -145,8 +145,8 @@ export const projectsData: ProjectItem[] = [
     whyImportant: "Combines traditional full-stack background with AI-integrated product development, Monaco editor, and WebContainer browser sandboxing.",
     technologies: ["React", "Node.js", "Vite", "Tailwind CSS", "Google Gemini", "WebContainer", "Monaco Editor"],
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    githubUrl: "https://github.com/AyushSenjaliya/Aippy",
+    liveUrl: "",
     featured: false
   },
   {
@@ -180,8 +180,8 @@ export const projectsData: ProjectItem[] = [
     whyImportant: "Demonstrates non-trivial frontend engineering capabilities beyond forms and dashboards by mastering 2D graphics rendering and complex canvas state logic.",
     technologies: ["React", "Konva.js", "HTML5 Canvas", "TypeScript", "Zustand", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    githubUrl: "https://github.com/AyushSenjaliya/Codium",
+    liveUrl: "",
     featured: false
   },
   {
@@ -217,7 +217,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["React Native", "Expo", "SQLite", "TypeScript", "React Navigation", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -252,7 +252,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["Node.js", "Apify", "Gemini AI", "Google Trends API", "Puppeteer", "Fastify", "MongoDB"],
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -287,7 +287,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["Node.js", "Python", "Apify", "LangChain", "Gemini API", "Express", "Supabase"],
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -322,7 +322,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["React", "React Query", "Zustand", "Recharts", "Axios", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -356,7 +356,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["React", "Node.js", "AWS EC2", "AWS S3", "Express", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -390,7 +390,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["React", "Node.js", "WhatsApp API", "Express", "MongoDB", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -424,7 +424,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["React", "WebSockets / Socket.io", "Chart.js", "TypeScript", "Node.js"],
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   },
   {
@@ -460,7 +460,7 @@ export const projectsData: ProjectItem[] = [
     technologies: ["Shopify API", "GraphQL", "Liquid", "Shopify CLI", "JavaScript", "Node.js"],
     image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=80",
     githubUrl: "https://github.com/AyushSenjaliya/",
-    liveUrl: "https://github.com/AyushSenjaliya/",
+    liveUrl: "",
     featured: false
   }
 ];

@@ -216,20 +216,26 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
           </div>
 
           {/* Action Footer */}
-          <div className="pt-4 border-t border-[var(--line)] flex flex-wrap gap-3 justify-end">
-            <Button
-              className="bg-[var(--gold)] text-[#0F1B1E] hover:bg-[var(--gold)]/90 font-mono font-bold text-xs px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md"
-              onClick={() => window.open(project.liveUrl, "_blank")}
-            >
-              View Live Application <ExternalLink size={14} />
-            </Button>
-            <Button
-              className="border border-[var(--line)] text-[var(--text)] hover:text-[var(--gold)] hover:border-[var(--gold)] bg-[var(--surface-2)] font-mono font-semibold text-xs px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all"
-              onClick={() => window.open(project.githubUrl, "_blank")}
-            >
-              <Github size={14} /> Source Code
-            </Button>
-          </div>
+          {(project.liveUrl || project.githubUrl) && (
+            <div className="pt-4 border-t border-[var(--line)] flex flex-wrap gap-3 justify-end">
+              {project.liveUrl && (
+                <Button
+                  className="bg-[var(--gold)] text-[#0F1B1E] hover:bg-[var(--gold)]/90 font-mono font-bold text-xs px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all shadow-md"
+                  onClick={() => window.open(project.liveUrl, "_blank")}
+                >
+                  View Live Application <ExternalLink size={14} />
+                </Button>
+              )}
+              {project.githubUrl && (
+                <Button
+                  className="border border-[var(--line)] text-[var(--text)] hover:text-[var(--gold)] hover:border-[var(--gold)] bg-[var(--surface-2)] font-mono font-semibold text-xs px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all"
+                  onClick={() => window.open(project.githubUrl, "_blank")}
+                >
+                  <Github size={14} /> Source Code
+                </Button>
+              )}
+            </div>
+          )}
 
         </div>
 
