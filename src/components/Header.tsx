@@ -22,7 +22,6 @@ const Header = () => {
     { name: "About", href: "/#about" },
     { name: "Skills", href: "/#skills" },
     { name: "Projects", href: "/projects" },
-    { name: "Demo", href: "/#calculator" },
     { name: "Product Lab", href: "/product-lab" },
     { name: "Experience", href: "/#experience" },
     { name: "Blog", href: "/#blog" },
@@ -46,9 +45,9 @@ const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-body">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
+              to={item.href}
               className={`transition-colors font-medium text-xs font-mono tracking-wide ${
                 (location.pathname === "/projects" && item.href === "/projects") ||
                 (location.pathname === "/product-lab" && item.href === "/product-lab")
@@ -57,14 +56,14 @@ const Header = () => {
               }`}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
-          <a
-            href="/#contact"
+          <Link
+            to="/#contact"
             className="ml-2 bg-[var(--gold)] text-[#0F1B1E] font-mono text-xs font-bold px-4 py-2 rounded-lg hover:bg-[var(--gold)]/90 transition-all shadow-sm"
           >
             Get in touch
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile menu toggle */}
@@ -82,22 +81,22 @@ const Header = () => {
         <div className="md:hidden fixed inset-x-0 top-[60px] bg-[#0F1B1E]/98 backdrop-blur-xl border-b border-[var(--line)] p-6 shadow-2xl animate-fade-in z-50">
           <div className="flex flex-col gap-4 text-center">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 onClick={toggleMenu}
                 className="text-base text-[var(--muted)] hover:text-[var(--gold)] font-mono transition-colors py-1.5"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="/#contact"
+            <Link
+              to="/#contact"
               onClick={toggleMenu}
               className="mt-2 bg-[var(--gold)] text-[#0F1B1E] font-mono text-sm font-bold py-3 rounded-lg hover:bg-[var(--gold)]/90 transition-all text-center"
             >
               Get in touch
-            </a>
+            </Link>
           </div>
         </div>
       )}
